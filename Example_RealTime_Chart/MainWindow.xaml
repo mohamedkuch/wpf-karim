@@ -7,49 +7,65 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width ="0.75*" />
-            <ColumnDefinition Width ="0.25*" />
+        <TabControl>
+            <TabItem Header="Tab1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width ="0.75*" />
+                        <ColumnDefinition Width ="0.25*" />
 
-        </Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
 
-        <!--Here we disable tooltips and hovering to get a better performance-->
-        <lvc:CartesianChart Grid.Column="0" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"  Grid.RowSpan="2">
-            <lvc:CartesianChart.Series>
-                <lvc:LineSeries Values="{Binding ChartValues}" 
+                    <!--Here we disable tooltips and hovering to get a better performance-->
+                    <lvc:CartesianChart Grid.Column="0" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"  Grid.RowSpan="2">
+                        <lvc:CartesianChart.Series>
+                            <lvc:LineSeries Values="{Binding ChartValues}" 
                                 PointGeometry="{x:Null}" 
                                 LineSmoothness="1"
                                 StrokeThickness="6" 
                                 Stroke="#F34336"
                                 Fill="Transparent"/>
-            </lvc:CartesianChart.Series>
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
+                        </lvc:CartesianChart.Series>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
                           MaxValue="{Binding AxisMax}" 
                           MinValue="{Binding AxisMin}"
                           Unit="{Binding AxisUnit}">
-                    <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding AxisStep}" />
-                    </lvc:Axis.Separator>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisX>
-        </lvc:CartesianChart>
-        <Grid Grid.Column="1">
-            <Button Click="InjectStopOnClick" Margin="31,363,35.4,10">
-                Inject/Stop Data
-            </Button>
-            <Button Click="Generate_Click" Margin="31,311,35.4,62">
-                Generate
-            </Button>
-            <Label Content="Dateinummer:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-            <TextBox Text ="{Binding Path=DataNumber, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="43,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Anfang:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
-            <TextBox Text ="{Binding Path=Anfang, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="43,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Ende:" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top"/>
-            <TextBox Text ="{Binding Path=Ende, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="43,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Y-Axis:" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top"/>
-            <TextBox Text ="{Binding Path=YWerte, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="43,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-
-        </Grid>
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="{Binding AxisStep}" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                    <Grid Grid.Column="1">
+                        <StackPanel>
+                            <Label Content="Dateinummer:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text ="{Binding Path=DataNumber, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label Content="Anfang:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text ="{Binding Path=Anfang, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label Content="Ende:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text ="{Binding Path=Ende, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label Content="Y-Axis:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text ="{Binding Path=YWerte, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                           
+                            <Button Click="Generate_Click" Margin="0,20,0,0" Height="40">
+                                Generate
+                            </Button>
+                            <Button Click="InjectStopOnClick" Margin="0,20,0,0" Height="40">
+                                Inject/Stop Data
+                            </Button>
+                           
+                            
+                           
+                        </StackPanel>
+                       
+                        
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Tab2">
+                
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
