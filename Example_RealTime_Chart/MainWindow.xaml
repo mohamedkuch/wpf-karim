@@ -64,7 +64,49 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Tab2">
-                
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width ="0.7*" />
+                        <ColumnDefinition Width ="0.3*" />
+
+                    </Grid.ColumnDefinitions>
+                    <lvc:CartesianChart Grid.Column="0"  Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="10,10,17.2,48" RenderTransformOrigin="0.5,0.5" Zoom="Xy" >
+                        <lvc:CartesianChart.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-0.113"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </lvc:CartesianChart.RenderTransform>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Y1" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="X1" Labels="{Binding Labels}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                    <Grid Grid.Column="1">
+                        <StackPanel>
+                            <Label Content="Anfang:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text="{Binding Path=Anfang, Mode = TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label Content="Ende:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text="{Binding Path=Ende, Mode = TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label Content="Dateinummer:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text ="{Binding Path=DataNumber, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+                            <Label Content="X-Axis:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text="{Binding Path=XWerte, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label Content="Y-Axis:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <TextBox Text="{Binding Path=XWerte, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button Content="Generate" Click="Generate_Click" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Width="203" Height="53"/>
+                            <Button Click="InjectStopOnClick" Margin="0,5,0,0" Width="203" HorizontalAlignment="Center" VerticalAlignment="Top" Height="53" Content="Plot"/>
+
+                        </StackPanel>
+                 
+
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
