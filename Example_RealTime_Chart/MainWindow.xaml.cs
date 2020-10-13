@@ -62,7 +62,7 @@ namespace Example_RealTime_Chart
 
         public MainWindow()
         {
-            
+
 
             InitializeComponent();
 
@@ -91,9 +91,15 @@ namespace Example_RealTime_Chart
 
             IsReading = false;
 
+
+
+
+            SeriesCollection = new SeriesCollection();
+
+
             DataContext = this;
 
-            
+
         }
         /*
         private static readonly Random random = new Random();
@@ -110,7 +116,7 @@ namespace Example_RealTime_Chart
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
-        
+
         //Properties real time plot
         public double AxisMax
         {
@@ -303,7 +309,7 @@ namespace Example_RealTime_Chart
 
             laenge_rt = int.Parse(Ende_RT) - int.Parse(Anfang_RT);
 
-            yValues_rt = new double[laenge_rt+1];
+            yValues_rt = new double[laenge_rt + 1];
             string eingabeY_rt = YAxis_RT;
             int placeY_rt = 1;
             switch (eingabeY_rt)
@@ -371,13 +377,13 @@ namespace Example_RealTime_Chart
             }
 
 
-           
+
         }
 
         //XY-plot functions
         private void Generate_Click_xy(object sender, RoutedEventArgs e)
         {
-            
+
             dNumber_xy = DataNumber_XY;
             string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_xy + "\\" + dNumber_xy + "_Measurements.csv";
             int counter = 0;
@@ -409,8 +415,8 @@ namespace Example_RealTime_Chart
             xValues_xy = new string[laenge_xy + 1];
             string eingabeY_xy = YAxis_XY;
             string eingabeX_xy = XAxis_XY;
-            int placeY_xy = 1;
-            int placeX_xy = 0;
+            int placeY_xy = 99;
+            int placeX_xy = 99;
             switch (eingabeY_xy)
             {
                 case "TS":
@@ -515,26 +521,34 @@ namespace Example_RealTime_Chart
                     break;
 
             }
-
-            testingY_xy = data_xy[placeY_xy];
-            testingY_xy.RemoveAt(0);
-            testingX_xy = data_xy[placeX_xy];
-            testingX_xy.RemoveAt(0);
-            int posY_xy = 0;
-            int posX_xy = 0;
-
-
-            for (int i = int.Parse(Anfang_XY); i < int.Parse(Ende_XY) + 1; i++)
+            try
             {
-                yValues_xy[posY_xy] = double.Parse(testingY_xy[i]);
-                posY_xy++;
-            }
+                testingY_xy = data_xy[placeY_xy];
+                testingY_xy.RemoveAt(0);
+                testingX_xy = data_xy[placeX_xy];
+                testingX_xy.RemoveAt(0);
+                int posY_xy = 0;
+                int posX_xy = 0;
 
-            for (int i = int.Parse(Anfang_XY); i < int.Parse(Ende_XY) + 1; i++)
-            {
-                xValues_xy[posX_xy] = testingX_xy[i];
-                posX_xy++;
+
+                for (int i = int.Parse(Anfang_XY); i < int.Parse(Ende_XY) + 1; i++)
+                {
+                    yValues_xy[posY_xy] = double.Parse(testingY_xy[i]);
+                    posY_xy++;
+                }
+
+                for (int i = int.Parse(Anfang_XY); i < int.Parse(Ende_XY) + 1; i++)
+                {
+                    xValues_xy[posX_xy] = testingX_xy[i];
+                    posX_xy++;
+                }
             }
+            catch (Exception)
+            {
+
+                MessageBox.Show("invalid eingaben!");
+            }
+            
 
         }
         public SeriesCollection SeriesCollection { get; set; }
@@ -543,19 +557,18 @@ namespace Example_RealTime_Chart
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SeriesCollection = new SeriesCollection
-            {
+            SeriesCollection.Add(
                 new LineSeries
                 {
-                    Title = "Series 1",
-                    Values = new ChartValues<double> { 4, 6, 5, 2 ,4 },
+                    Title = dataNumber_xy,
+                    Values = new ChartValues<double> (yValues_xy),
                     PointGeometry = null
-                },
-            };
-            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
-            YFormatter = value => value.ToString();
-            DataContext = this;
 
+                }
+            );
+
+            Labels = xValues_xy;
+            YFormatter = value => value.ToString();
 
         }
     }
