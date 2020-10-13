@@ -380,7 +380,7 @@ namespace Example_RealTime_Chart
 
         }
 
-        //XY-plot functions
+        //XY-plot functions 12
         private void Generate_Click_xy(object sender, RoutedEventArgs e)
         {
 
