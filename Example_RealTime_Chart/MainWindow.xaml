@@ -40,16 +40,16 @@
                     <Grid Grid.Column="1">
                         <StackPanel>
                             <Label Content="Dateinummer:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text ="{Binding Path=DataNumber, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox Text ="{Binding Path=DataNumber_RT, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Anfang:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text ="{Binding Path=Anfang, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox Text ="{Binding Path=Anfang_RT, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Ende:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text ="{Binding Path=Ende, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox Text ="{Binding Path=Ende_RT, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Y-Axis:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text ="{Binding Path=YWerte, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox Text ="{Binding Path=YAxis_RT, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                            
-                            <Button Click="Generate_Click" Margin="0,20,0,0" Height="40">
-                                Generate
+                            <Button Click="Generate_Click_realtime" Margin="0,20,0,0" Height="40">
+                                Generate realtime
                             </Button>
                             <Button Click="InjectStopOnClick" Margin="0,20,0,0" Height="40">
                                 Inject/Stop Data
@@ -90,17 +90,17 @@
                     <Grid Grid.Column="1">
                         <StackPanel>
                             <Label Content="Anfang:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text="{Binding Path=Anfang, Mode = TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox Text="{Binding Path=Anfang_XY, Mode = TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Ende:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text="{Binding Path=Ende, Mode = TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox Text="{Binding Path=Ende_XY, Mode = TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Dateinummer:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text ="{Binding Path=DataNumber, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+                            <TextBox Text ="{Binding Path=DataNumber_XY, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
                             <Label Content="X-Axis:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text="{Binding Path=XWerte, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox Text="{Binding Path=XAxis_XY, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Y-Axis:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text="{Binding Path=XWerte, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <Button Content="Generate" Click="Generate_Click" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Width="203" Height="53"/>
-                            <Button Click="InjectStopOnClick" Margin="0,5,0,0" Width="203" HorizontalAlignment="Center" VerticalAlignment="Top" Height="53" Content="Plot"/>
+                            <TextBox Text="{Binding Path=YAxis_XY, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button Content="Generate XY" Click="Generate_Click_xy" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Width="203" Height="53"/>
+                            <Button Click="Button_Click" Margin="0,5,0,0" Width="203" HorizontalAlignment="Center" VerticalAlignment="Top" Height="53" Content="Plot"/>
 
                         </StackPanel>
                  

@@ -28,20 +28,36 @@ namespace Example_RealTime_Chart
 
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        //Variables real time 
         private double _axisMax;
         private double _axisMin;
         private double _trend;
-        double[] yWerte;
-        private string dataNumber;
-        private string anfang;
-        private string ende;
-        private string yWerte1;
+        double[] yValues_rt;
+        private string dataNumber_rt;
+        private string anfang_rt;
+        private string ende_rt;
+        private string yAxis_rt;
 
+        List<List<string>> data_rt = new List<List<string>>();
+        List<string> testingY_rt;
+        string dNumber_rt;
+        int laenge_rt;
 
-        List<List<string>> data = new List<List<string>>();
-        List<string> testingY;
-        string dNumber;
-        int laenge;
+        //Variables XY-plot
+        double[] yValues_xy;
+        string[] xValues_xy;
+        private string dataNumber_xy;
+        private string anfang_xy;
+        private string ende_xy;
+        private string yAxis_xy;
+        private string xAxis_xy;
+
+        List<List<string>> data_xy = new List<List<string>>();
+        string dNumber_xy;
+        int laenge_xy;
+        List<string> testingY_xy;
+        List<string> testingX_xy;
+
 
 
         public MainWindow()
@@ -77,16 +93,9 @@ namespace Example_RealTime_Chart
 
             DataContext = this;
 
-            //yWerte = new double[10000];
-
             
-
-            /*for (int i = 0; i < testingY.Count + 1; i++)
-            {
-                yWerte[i] = double.Parse(testingY[i]);
-            }*/
         }
-
+        /*
         private static readonly Random random = new Random();
 
         private static double RandomNumberBetween(double minValue, double maxValue)
@@ -95,13 +104,14 @@ namespace Example_RealTime_Chart
 
             return minValue + (next * (maxValue - minValue));
         }
-
+        */
 
         public ChartValues<MeasureModel> ChartValues { get; set; }
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
-
+        
+        //Properties real time plot
         public double AxisMax
         {
             get { return _axisMax; }
@@ -120,48 +130,101 @@ namespace Example_RealTime_Chart
                 OnPropertyChanged("AxisMin");
             }
         }
-        public string DataNumber
+        public string DataNumber_RT
         {
-            get { return dataNumber; }
+            get { return dataNumber_rt; }
             set
             {
                 int number;
                 bool res = int.TryParse(value, out number);
-                if (res) dataNumber = value;
-                OnPropertyChanged("DataNumber");
+                if (res) dataNumber_rt = value;
+                OnPropertyChanged("DataNumber_RT");
             }
         }
-        public string Anfang
+        public string Anfang_RT
         {
-            get { return anfang; }
+            get { return anfang_rt; }
             set
             {
                 int number;
                 bool res = int.TryParse(value, out number);
-                if (res) anfang = value;
-                OnPropertyChanged("Anfang");
+                if (res) anfang_rt = value;
+                OnPropertyChanged("Anfang_RT");
             }
         }
-        public string Ende
+        public string Ende_RT
         {
-            get { return ende; }
+            get { return ende_rt; }
             set
             {
                 int number;
                 bool res = int.TryParse(value, out number);
-                if (res) ende = value;
-                OnPropertyChanged("Ende");
+                if (res) ende_rt = value;
+                OnPropertyChanged("Ende_RT");
             }
         }
-        public string YWerte
+        public string YAxis_RT
         {
-            get { return yWerte1; }
+            get { return yAxis_rt; }
             set
             {
-                yWerte1 = value;
-                OnPropertyChanged("YWerte");
+                yAxis_rt = value;
+                OnPropertyChanged("YAxis_RT");
             }
         }
+        //Properties xy plot
+        public string DataNumber_XY
+        {
+            get { return dataNumber_xy; }
+            set
+            {
+                int number;
+                bool res = int.TryParse(value, out number);
+                if (res) dataNumber_xy = value;
+                OnPropertyChanged("DataNumber_XY");
+            }
+        }
+        public string Anfang_XY
+        {
+            get { return anfang_xy; }
+            set
+            {
+                int number;
+                bool res = int.TryParse(value, out number);
+                if (res) anfang_xy = value;
+                OnPropertyChanged("Anfang_XY");
+            }
+        }
+        public string Ende_XY
+        {
+            get { return ende_xy; }
+            set
+            {
+                int number;
+                bool res = int.TryParse(value, out number);
+                if (res) ende_xy = value;
+                OnPropertyChanged("Ende_XY");
+            }
+        }
+        public string YAxis_XY
+        {
+            get { return yAxis_xy; }
+            set
+            {
+                yAxis_xy = value;
+                OnPropertyChanged("YAxis_XY");
+            }
+        }
+        public string XAxis_XY
+        {
+            get { return xAxis_xy; }
+            set
+            {
+                xAxis_xy = value;
+                OnPropertyChanged("XAxis_XY");
+            }
+        }
+        //Real-time-plot functions
         public bool IsReading { get; set; }
 
         private void Read()
@@ -169,7 +232,7 @@ namespace Example_RealTime_Chart
             var r = new Random();
             int counter = 0;
 
-            while (IsReading && counter < laenge + 1)
+            while (IsReading && counter < laenge_rt + 1)
             {
                 Thread.Sleep(150);
                 var now = DateTime.Now;
@@ -179,7 +242,7 @@ namespace Example_RealTime_Chart
                 ChartValues.Add(new MeasureModel
                 {
                     DateTime = now,
-                    Value = yWerte[counter]
+                    Value = yValues_rt[counter]
                 });
                 counter++;
 
@@ -210,10 +273,113 @@ namespace Example_RealTime_Chart
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void Generate_Click(object sender, RoutedEventArgs e)
+        private void Generate_Click_realtime(object sender, RoutedEventArgs e)
         {
-            dNumber = DataNumber;
-            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber + "\\" + dNumber + "_Measurements.csv";
+            dNumber_rt = DataNumber_RT;
+            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_rt + "\\" + dNumber_rt + "_Measurements.csv";
+            int counter = 0;
+            string line;
+
+
+            System.IO.StreamReader file = new System.IO.StreamReader(path);
+            while ((line = file.ReadLine()) != null)
+            {
+                var lineArray = line.Split(';');
+
+                for (int i = 0; i < lineArray.Length; i++)
+                {
+                    if (counter == 0)
+                    {
+                        data_rt.Add(new List<string>());
+                        data_rt[i].Add(lineArray[i]);
+                    }
+                    else
+                    {
+                        data_rt[i].Add(lineArray[i]);
+                    }
+                }
+                counter++;
+            }
+
+            laenge_rt = int.Parse(Ende_RT) - int.Parse(Anfang_RT);
+
+            yValues_rt = new double[laenge_rt+1];
+            string eingabeY_rt = YAxis_RT;
+            int placeY_rt = 1;
+            switch (eingabeY_rt)
+            {
+                case "TS":
+                    placeY_rt = 0;
+                    break;
+                case "X1":
+                    placeY_rt = 1;
+                    break;
+                case "Y1":
+                    placeY_rt = 2;
+                    break;
+                case "Z1":
+                    placeY_rt = 3;
+                    break;
+                case "A1":
+                    placeY_rt = 4;
+                    break;
+                case "B1":
+                    placeY_rt = 5;
+                    break;
+                case "X2":
+                    placeY_rt = 6;
+                    break;
+                case "Y2":
+                    placeY_rt = 7;
+                    break;
+                case "Z2":
+                    placeY_rt = 8;
+                    break;
+                case "ZC":
+                    placeY_rt = 9;
+                    break;
+                case "SC":
+                    placeY_rt = 10;
+                    break;
+                case "SS":
+                    placeY_rt = 11;
+                    break;
+                case "LN":
+                    placeY_rt = 12;
+                    break;
+                case "FX":
+                    placeY_rt = 13;
+                    break;
+                case "FY":
+                    placeY_rt = 14;
+                    break;
+                case "FZ":
+                    placeY_rt = 15;
+                    break;
+
+            }
+
+
+            testingY_rt = data_rt[placeY_rt];
+            testingY_rt.RemoveAt(0);
+            int posY_rt = 0;
+
+            for (int i = int.Parse(Anfang_RT); i < int.Parse(Ende_RT) + 1; i++)
+            {
+                yValues_rt[posY_rt] = double.Parse(testingY_rt[i]);
+                posY_rt++;
+            }
+
+
+           
+        }
+
+        //XY-plot functions
+        private void Generate_Click_xy(object sender, RoutedEventArgs e)
+        {
+            
+            dNumber_xy = DataNumber_XY;
+            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_xy + "\\" + dNumber_xy + "_Measurements.csv";
             int counter = 0;
             string line;
 
@@ -226,91 +392,171 @@ namespace Example_RealTime_Chart
                 {
                     if (counter == 0)
                     {
-                        data.Add(new List<string>());
-                        data[i].Add(lineArray[i]);
+                        data_xy.Add(new List<string>());
+                        data_xy[i].Add(lineArray[i]);
                     }
                     else
                     {
-                        data[i].Add(lineArray[i]);
+                        data_xy[i].Add(lineArray[i]);
                     }
                 }
                 counter++;
             }
 
-            laenge = int.Parse(Ende) - int.Parse(Anfang);
+            laenge_xy = int.Parse(Ende_XY) - int.Parse(Anfang_XY);
 
-            yWerte = new double[laenge+1];
-            string eingabeY = YWerte;
-            int place1 = 1;
-            switch (eingabeY)
+            yValues_xy = new double[laenge_xy + 1];
+            xValues_xy = new string[laenge_xy + 1];
+            string eingabeY_xy = YAxis_XY;
+            string eingabeX_xy = XAxis_XY;
+            int placeY_xy = 1;
+            int placeX_xy = 0;
+            switch (eingabeY_xy)
             {
                 case "TS":
-                    place1 = 0;
+                    placeY_xy = 0;
                     break;
                 case "X1":
-                    place1 = 1;
+                    placeY_xy = 1;
                     break;
                 case "Y1":
-                    place1 = 2;
+                    placeY_xy = 2;
                     break;
                 case "Z1":
-                    place1 = 3;
+                    placeY_xy = 3;
                     break;
                 case "A1":
-                    place1 = 4;
+                    placeY_xy = 4;
                     break;
                 case "B1":
-                    place1 = 5;
+                    placeY_xy = 5;
                     break;
                 case "X2":
-                    place1 = 6;
+                    placeY_xy = 6;
                     break;
                 case "Y2":
-                    place1 = 7;
+                    placeY_xy = 7;
                     break;
                 case "Z2":
-                    place1 = 8;
+                    placeY_xy = 8;
                     break;
                 case "ZC":
-                    place1 = 9;
+                    placeY_xy = 9;
                     break;
                 case "SC":
-                    place1 = 10;
+                    placeY_xy = 10;
                     break;
                 case "SS":
-                    place1 = 11;
+                    placeY_xy = 11;
                     break;
                 case "LN":
-                    place1 = 12;
+                    placeY_xy = 12;
                     break;
                 case "FX":
-                    place1 = 13;
+                    placeY_xy = 13;
                     break;
                 case "FY":
-                    place1 = 14;
+                    placeY_xy = 14;
                     break;
                 case "FZ":
-                    place1 = 15;
+                    placeY_xy = 15;
+                    break;
+
+            }
+            switch (eingabeX_xy)
+            {
+                case "TS":
+                    placeX_xy = 0;
+                    break;
+                case "X1":
+                    placeX_xy = 1;
+                    break;
+                case "Y1":
+                    placeX_xy = 2;
+                    break;
+                case "Z1":
+                    placeX_xy = 3;
+                    break;
+                case "A1":
+                    placeX_xy = 4;
+                    break;
+                case "B1":
+                    placeX_xy = 5;
+                    break;
+                case "X2":
+                    placeX_xy = 6;
+                    break;
+                case "Y2":
+                    placeX_xy = 7;
+                    break;
+                case "Z2":
+                    placeX_xy = 8;
+                    break;
+                case "ZC":
+                    placeX_xy = 9;
+                    break;
+                case "SC":
+                    placeX_xy = 10;
+                    break;
+                case "SS":
+                    placeX_xy = 11;
+                    break;
+                case "LN":
+                    placeX_xy = 12;
+                    break;
+                case "FX":
+                    placeX_xy = 13;
+                    break;
+                case "FY":
+                    placeX_xy = 14;
+                    break;
+                case "FZ":
+                    placeX_xy = 15;
                     break;
 
             }
 
+            testingY_xy = data_xy[placeY_xy];
+            testingY_xy.RemoveAt(0);
+            testingX_xy = data_xy[placeX_xy];
+            testingX_xy.RemoveAt(0);
+            int posY_xy = 0;
+            int posX_xy = 0;
 
-            testingY = data[place1];
-            testingY.RemoveAt(0);
-            int posY = 0;
 
-            for (int i = int.Parse(Anfang); i < int.Parse(Ende) + 1; i++)
+            for (int i = int.Parse(Anfang_XY); i < int.Parse(Ende_XY) + 1; i++)
             {
-                yWerte[posY] = double.Parse(testingY[i]);
-                posY++;
+                yValues_xy[posY_xy] = double.Parse(testingY_xy[i]);
+                posY_xy++;
             }
 
-
-            /*for (int i = 0; i < testingY.Count; i++)
+            for (int i = int.Parse(Anfang_XY); i < int.Parse(Ende_XY) + 1; i++)
             {
-                yWerte[i] = double.Parse(testingY[i]);
-            }*/
+                xValues_xy[posX_xy] = testingX_xy[i];
+                posX_xy++;
+            }
+
+        }
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> YFormatter { get; set; }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SeriesCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Title = "Series 1",
+                    Values = new ChartValues<double> { 4, 6, 5, 2 ,4 },
+                    PointGeometry = null
+                },
+            };
+            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
+            YFormatter = value => value.ToString();
+            DataContext = this;
+
+
         }
     }
 }
