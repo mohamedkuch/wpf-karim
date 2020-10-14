@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -100,6 +100,9 @@ namespace Example_RealTime_Chart
             ComboBox_Y.Items.Add(new ComboBoxItem { Content = "keine Datei" });
             ComboBox_Y.SelectedIndex = 0;
 
+            ComboBox_Y_RT.Items.Add(new ComboBoxItem { Content = "keine Datei" });
+            ComboBox_Y_RT.SelectedIndex = 0;
+
             DataContext = this;
 
 
@@ -169,6 +172,28 @@ namespace Example_RealTime_Chart
                 DataName_RT = filename;
                 dNumber_rt = filename.Remove(filename.IndexOf("_"));
 
+                get_Entries_RT();
+
+            }
+        }
+
+        public void get_Entries_RT()
+        {
+            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_rt + "\\" + dNumber_rt + "_Measurements.csv";
+            string line;
+
+            System.IO.StreamReader file = new System.IO.StreamReader(path);
+            while ((line = file.ReadLine()) != null)
+            {
+                var lineArray = line.Split(';');
+                ComboBox_Y_RT.Items.Remove(ComboBox_Y_RT.Items.GetItemAt(0));
+
+                for (int i = 0; i < lineArray.Length; i++)
+                {
+                    ComboBox_Y_RT.Items.Add(new ComboBoxItem { Content = lineArray[i] });
+                }
+                ComboBox_Y_RT.SelectedIndex = 0;
+                break;
             }
         }
 
@@ -363,7 +388,8 @@ namespace Example_RealTime_Chart
             laenge_rt = int.Parse(Ende_RT) - int.Parse(Anfang_RT);
 
             yValues_rt = new double[laenge_rt + 1];
-            string eingabeY_rt = YAxis_RT;
+            ComboBoxItem selected_Y_RT = (ComboBoxItem)ComboBox_Y_RT.SelectedItem;
+            string eingabeY_rt = selected_Y_RT.Content.ToString();
             int placeY_rt = 1;
             switch (eingabeY_rt)
             {
