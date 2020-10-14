@@ -40,7 +40,8 @@ namespace Example_RealTime_Chart
 
         List<List<string>> data_rt = new List<List<string>>();
         List<string> testingY_rt;
-        string dNumber_rt;
+        string filePath_rt;
+
         int laenge_rt;
 
         //Variables XY-plot
@@ -51,7 +52,7 @@ namespace Example_RealTime_Chart
         private string ende_xy;
 
         List<List<string>> data_xy = new List<List<string>>();
-        string dNumber_xy;
+        string filePath_xy;
         int laenge_xy;
         List<string> testingY_xy;
         List<string> testingX_xy;
@@ -170,7 +171,7 @@ namespace Example_RealTime_Chart
                 // Open document
                 string filename = dlg.SafeFileName;
                 DataName_RT = filename;
-                dNumber_rt = filename.Remove(filename.IndexOf("_"));
+                filePath_rt = dlg.FileName;
 
                 get_Entries_RT();
 
@@ -179,7 +180,7 @@ namespace Example_RealTime_Chart
 
         public void get_Entries_RT()
         {
-            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_rt + "\\" + dNumber_rt + "_Measurements.csv";
+            string path = filePath_rt;
             string line;
 
             System.IO.StreamReader file = new System.IO.StreamReader(path);
@@ -256,7 +257,7 @@ namespace Example_RealTime_Chart
                 // Open document
                 string filename = dlg.SafeFileName;
                 DataName_XY = filename;
-                dNumber_xy = filename.Remove(filename.IndexOf("_"));
+                filePath_xy = dlg.FileName;
                 // get X-Axis , Y-Axis
                 get_Entries_XY();
 
@@ -265,7 +266,7 @@ namespace Example_RealTime_Chart
 
         public void get_Entries_XY()
         {
-            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_xy + "\\" + dNumber_xy + "_Measurements.csv";
+            string path = filePath_xy;
             string line;
 
             System.IO.StreamReader file = new System.IO.StreamReader(path);
@@ -361,7 +362,7 @@ namespace Example_RealTime_Chart
 
         private void Generate_Click_realtime(object sender, RoutedEventArgs e)
         {
-            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_rt + "\\" + dNumber_rt + "_Measurements.csv";
+            string path = filePath_rt;
             int counter = 0;
             string line;
 
@@ -462,7 +463,7 @@ namespace Example_RealTime_Chart
         //XY-plot functions
         private void Generate_Click_xy(object sender, RoutedEventArgs e)
         {
-            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_xy + "\\" + dNumber_xy + "_Measurements.csv";
+            string path = filePath_xy;
             int counter = 0;
             string line;
 
