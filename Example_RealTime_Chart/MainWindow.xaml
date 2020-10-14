@@ -41,9 +41,8 @@
                         <StackPanel>
                             <Label Content="Datei csv:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
                             <StackPanel Orientation = "Horizontal">
-                                <Button Name="btnOpenFile" Click="OpenFile_Click">Open file</Button>
+                                <Button Name="btnOpenFile" Click="OpenFile_Click_RT">Open file</Button>
                                 <Label Content="{Binding Path=DataName_RT, Mode=TwoWay}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-
                             </StackPanel>
                             <Label Content="Anfang:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
                             <TextBox Text ="{Binding Path=Anfang_RT, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -93,12 +92,15 @@
                     </lvc:CartesianChart>
                     <Grid Grid.Column="1">
                         <StackPanel>
+                            <Label Content="Datei csv:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <StackPanel Orientation = "Horizontal">
+                                <Button Name="btnOpenFile_xy" Click="OpenFile_Click_XY">Open file</Button>
+                                <Label Content="{Binding Path=DataName_XY, Mode=TwoWay}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            </StackPanel>
                             <Label Content="Anfang:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
                             <TextBox Text="{Binding Path=Anfang_XY, Mode = TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Ende:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
                             <TextBox Text="{Binding Path=Ende_XY, Mode = TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <Label Content="Dateinummer:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text ="{Binding Path=DataNumber_XY, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
                             <Label Content="X-Axis:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
                             <TextBox Text="{Binding Path=XAxis_XY, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Y-Axis:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>

@@ -46,7 +46,7 @@ namespace Example_RealTime_Chart
         //Variables XY-plot
         double[] yValues_xy;
         string[] xValues_xy;
-        private string dataNumber_xy;
+        private string _dataName_xy;
         private string anfang_xy;
         private string ende_xy;
         private string yAxis_xy;
@@ -91,6 +91,7 @@ namespace Example_RealTime_Chart
 
             IsReading = false;
             DataName_RT = "keine Datei";
+            DataName_XY = "keine Datei";
 
 
 
@@ -147,7 +148,7 @@ namespace Example_RealTime_Chart
             }
         }
 
-        public void OpenFile_Click(object sender, RoutedEventArgs e)
+        public void OpenFile_Click_RT(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.FileName = "_Measurements"; // Default file name
@@ -165,6 +166,7 @@ namespace Example_RealTime_Chart
                 string filename = dlg.SafeFileName;
                 DataName_RT = filename;
                 dNumber_rt = filename.Remove(filename.IndexOf("_"));
+
             }
         }
 
@@ -200,15 +202,35 @@ namespace Example_RealTime_Chart
             }
         }
         //Properties xy plot
-        public string DataNumber_XY
+        public string DataName_XY
         {
-            get { return dataNumber_xy; }
+            get { return _dataName_xy; }
             set
             {
-                int number;
-                bool res = int.TryParse(value, out number);
-                if (res) dataNumber_xy = value;
-                OnPropertyChanged("DataNumber_XY");
+                _dataName_xy = value;
+                OnPropertyChanged("DataName_XY");
+            }
+        }
+
+        public void OpenFile_Click_XY(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = "_Measurements"; // Default file name
+            dlg.DefaultExt = ".csv"; // Default file extension
+            dlg.Filter = "CSV files (*.csv)|*.csv|XML files (*.xml)|*.xml"; // Filter files by extension
+            dlg.InitialDirectory = Environment.CurrentDirectory ;
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.SafeFileName;
+                DataName_XY = filename;
+                dNumber_xy = filename.Remove(filename.IndexOf("_"));
+
             }
         }
         public string Anfang_XY
@@ -402,8 +424,6 @@ namespace Example_RealTime_Chart
         //XY-plot functions
         private void Generate_Click_xy(object sender, RoutedEventArgs e)
         {
-
-            dNumber_xy = DataNumber_XY;
             string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_xy + "\\" + dNumber_xy + "_Measurements.csv";
             int counter = 0;
             string line;
@@ -579,7 +599,7 @@ namespace Example_RealTime_Chart
             SeriesCollection.Add(
                 new LineSeries
                 {
-                    Title = dataNumber_xy,
+                    Title = DataName_XY.Remove(DataName_XY.IndexOf("_")),
                     Values = new ChartValues<double> (yValues_xy),
                     PointGeometry = null
 
