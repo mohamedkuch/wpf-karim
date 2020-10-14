@@ -39,8 +39,12 @@
                     </lvc:CartesianChart>
                     <Grid Grid.Column="1">
                         <StackPanel>
-                            <Label Content="Dateinummer:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
-                            <TextBox Text ="{Binding Path=DataNumber_RT, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Label Content="Datei csv:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                            <StackPanel Orientation = "Horizontal">
+                                <Button Name="btnOpenFile" Click="OpenFile_Click">Open file</Button>
+                                <Label Content="{Binding Path=DataName_RT, Mode=TwoWay}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+
+                            </StackPanel>
                             <Label Content="Anfang:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
                             <TextBox Text ="{Binding Path=Anfang_RT, Mode=TwoWay}" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <Label Content="Ende:" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>

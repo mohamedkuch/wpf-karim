@@ -18,7 +18,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Configurations;
 using System.IO;
-
+using Microsoft.Win32;
 
 namespace Example_RealTime_Chart
 {
@@ -33,7 +33,7 @@ namespace Example_RealTime_Chart
         private double _axisMin;
         private double _trend;
         double[] yValues_rt;
-        private string dataNumber_rt;
+        private string _dataName_RT;
         private string anfang_rt;
         private string ende_rt;
         private string yAxis_rt;
@@ -90,6 +90,7 @@ namespace Example_RealTime_Chart
             //The next code simulates data changes every 300 ms
 
             IsReading = false;
+            DataName_RT = "keine Datei";
 
 
 
@@ -136,17 +137,37 @@ namespace Example_RealTime_Chart
                 OnPropertyChanged("AxisMin");
             }
         }
-        public string DataNumber_RT
+        public string DataName_RT
         {
-            get { return dataNumber_rt; }
+            get { return _dataName_RT; }
             set
             {
-                int number;
-                bool res = int.TryParse(value, out number);
-                if (res) dataNumber_rt = value;
-                OnPropertyChanged("DataNumber_RT");
+                _dataName_RT = value;
+                OnPropertyChanged("DataName_RT");
             }
         }
+
+        public void OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = "_Measurements"; // Default file name
+            dlg.DefaultExt = ".csv"; // Default file extension
+            dlg.Filter = "CSV files (*.csv)|*.csv|XML files (*.xml)|*.xml"; // Filter files by extension
+            dlg.InitialDirectory = Environment.CurrentDirectory ;
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.SafeFileName;
+                DataName_RT = filename;
+                dNumber_rt = filename.Remove(filename.IndexOf("_"));
+            }
+        }
+
         public string Anfang_RT
         {
             get { return anfang_rt; }
@@ -281,11 +302,9 @@ namespace Example_RealTime_Chart
 
         private void Generate_Click_realtime(object sender, RoutedEventArgs e)
         {
-            dNumber_rt = DataNumber_RT;
             string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_rt + "\\" + dNumber_rt + "_Measurements.csv";
             int counter = 0;
             string line;
-
 
             System.IO.StreamReader file = new System.IO.StreamReader(path);
             while ((line = file.ReadLine()) != null)
