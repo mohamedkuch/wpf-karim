@@ -187,7 +187,11 @@ namespace Example_RealTime_Chart
             while ((line = file.ReadLine()) != null)
             {
                 var lineArray = line.Split(';');
-                ComboBox_Y_RT.Items.Remove(ComboBox_Y_RT.Items.GetItemAt(0));
+                var itemCount = ComboBox_Y_RT.Items.Count;
+                for (int i = 0; i < itemCount; i++)
+                {
+                    ComboBox_Y_RT.Items.Remove(ComboBox_Y_RT.Items.GetItemAt(0));
+                }
 
                 for (int i = 0; i < lineArray.Length; i++)
                 {
@@ -273,8 +277,18 @@ namespace Example_RealTime_Chart
             while ((line = file.ReadLine()) != null)
             {
                 var lineArray = line.Split(';');
-                ComboBox_X.Items.Remove(ComboBox_X.Items.GetItemAt(0));
-                ComboBox_Y.Items.Remove(ComboBox_Y.Items.GetItemAt(0));
+
+                var itemCount_X = ComboBox_X.Items.Count;
+                var itemCount_Y = ComboBox_Y.Items.Count;
+
+                for (int i = 0; i < itemCount_X; i++)
+                {
+                    ComboBox_X.Items.Remove(ComboBox_X.Items.GetItemAt(0));
+                }
+                for (int i = 0; i < itemCount_Y; i++)
+                {
+                    ComboBox_Y.Items.Remove(ComboBox_Y.Items.GetItemAt(0));
+                }
 
                 for (int i = 0; i < lineArray.Length; i++)
                 {
