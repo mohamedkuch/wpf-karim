@@ -49,8 +49,6 @@ namespace Example_RealTime_Chart
         private string _dataName_xy;
         private string anfang_xy;
         private string ende_xy;
-        private string yAxis_xy;
-        private string xAxis_xy;
 
         List<List<string>> data_xy = new List<List<string>>();
         string dNumber_xy;
@@ -286,24 +284,7 @@ namespace Example_RealTime_Chart
                 OnPropertyChanged("Ende_XY");
             }
         }
-        public string YAxis_XY
-        {
-            get { return yAxis_xy; }
-            set
-            {
-                yAxis_xy = value;
-                OnPropertyChanged("YAxis_XY");
-            }
-        }
-        public string XAxis_XY
-        {
-            get { return xAxis_xy; }
-            set
-            {
-                xAxis_xy = value;
-                OnPropertyChanged("XAxis_XY");
-            }
-        }
+       
         //Real-time-plot functions
         public bool IsReading { get; set; }
 
