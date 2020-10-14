@@ -107,6 +107,8 @@ namespace Example_RealTime_Chart
             DataContext = this;
 
 
+
+
         }
         /*
         private static readonly Random random = new Random();
@@ -466,7 +468,7 @@ namespace Example_RealTime_Chart
 
             for (int i = int.Parse(Anfang_RT); i < int.Parse(Ende_RT) + 1; i++)
             {
-                yValues_rt[posY_rt] = double.Parse(testingY_rt[i]);
+                yValues_rt[posY_rt] = double.Parse(testingY_rt[i].Replace(".",","));
                 posY_rt++;
             }
 
@@ -630,7 +632,8 @@ namespace Example_RealTime_Chart
 
                 for (int i = int.Parse(Anfang_XY); i < int.Parse(Ende_XY) + 1; i++)
                 {
-                    yValues_xy[posY_xy] = double.Parse(testingY_xy[i]);
+
+                    yValues_xy[posY_xy] = double.Parse(testingY_xy[i].Replace(".",","));
                     posY_xy++;
                 }
 
