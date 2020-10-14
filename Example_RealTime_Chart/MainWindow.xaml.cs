@@ -90,14 +90,17 @@ namespace Example_RealTime_Chart
             //The next code simulates data changes every 300 ms
 
             IsReading = false;
+
+            // initializing Data
+            SeriesCollection = new SeriesCollection();
             DataName_RT = "keine Datei";
             DataName_XY = "keine Datei";
 
+            ComboBox_X.Items.Add(new ComboBoxItem { Content = "keine Datei" });
+            ComboBox_X.SelectedIndex = 0;
 
-
-
-            SeriesCollection = new SeriesCollection();
-
+            ComboBox_Y.Items.Add(new ComboBoxItem { Content = "keine Datei" });
+            ComboBox_Y.SelectedIndex = 0;
 
             DataContext = this;
 
@@ -118,6 +121,7 @@ namespace Example_RealTime_Chart
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
+
 
         //Properties real time plot
         public double AxisMax
@@ -230,9 +234,36 @@ namespace Example_RealTime_Chart
                 string filename = dlg.SafeFileName;
                 DataName_XY = filename;
                 dNumber_xy = filename.Remove(filename.IndexOf("_"));
+                // get X-Axis , Y-Axis
+                get_Entries_XY();
 
             }
         }
+
+        public void get_Entries_XY()
+        {
+            string path = @"..\..\ExcelData\HDM_CSV4WQM\" + dNumber_xy + "\\" + dNumber_xy + "_Measurements.csv";
+            string line;
+
+            System.IO.StreamReader file = new System.IO.StreamReader(path);
+            while ((line = file.ReadLine()) != null)
+            {
+                var lineArray = line.Split(';');
+                ComboBox_X.Items.Remove(ComboBox_X.Items.GetItemAt(0));
+                ComboBox_Y.Items.Remove(ComboBox_Y.Items.GetItemAt(0));
+
+                for (int i = 0; i < lineArray.Length; i++)
+                {
+                    ComboBox_X.Items.Add(new ComboBoxItem { Content = lineArray[i] });
+                    ComboBox_Y.Items.Add(new ComboBoxItem { Content = lineArray[i] });
+                }
+                ComboBox_X.SelectedIndex = 0;
+                ComboBox_Y.SelectedIndex = 1;
+
+                break;
+            }
+        }
+
         public string Anfang_XY
         {
             get { return anfang_xy; }
@@ -452,8 +483,13 @@ namespace Example_RealTime_Chart
 
             yValues_xy = new double[laenge_xy + 1];
             xValues_xy = new string[laenge_xy + 1];
-            string eingabeY_xy = YAxis_XY;
-            string eingabeX_xy = XAxis_XY;
+
+            ComboBoxItem selected_Y = (ComboBoxItem)ComboBox_Y.SelectedItem;
+            string eingabeY_xy = selected_Y.Content.ToString();
+
+            ComboBoxItem selected_X = (ComboBoxItem)ComboBox_X.SelectedItem;
+            string eingabeX_xy = selected_X.Content.ToString();
+
             int placeY_xy = 99;
             int placeX_xy = 99;
             switch (eingabeY_xy)
